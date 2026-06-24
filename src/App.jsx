@@ -114,7 +114,7 @@ Dow Chemical`);
     if (!isAuthenticated) return;
     
     // Fetch Vendors
-    fetch('http://localhost:4000/vendors')
+    fetch('https://vendorapi-production-e486.up.railway.app/vendors')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -146,7 +146,7 @@ Dow Chemical`);
       .catch(err => console.error('Failed to load vendors:', err));
 
     // Fetch SDS documents
-    fetch('http://localhost:4000/sds-data')
+    fetch('https://vendorapi-production-e486.up.railway.app/sds-data')
       .then(res => res.json())
       .then(data => {
         if (data && Array.isArray(data.records)) {
@@ -160,7 +160,7 @@ Dow Chemical`);
   const handleAddVendor = async (data) => {
     const v = { id: 'v-' + Date.now(), ...data, requestDate: null, lastResponseDate: null, status: 'Pending', complianceStatus: 'Pending' };
     try {
-      await fetch('http://localhost:4000/vendors', {
+      await fetch('https://vendorapi-production-e486.up.railway.app/vendors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(v)
@@ -179,7 +179,7 @@ Dow Chemical`);
     const v = vendors.find(x => x.id === id);
     if (!v) return;
     try {
-      await fetch(`http://localhost:4000/vendors/${id}`, { method: 'DELETE' });
+      await fetch(`https://vendorapi-production-e486.up.railway.app/vendors/${id}`, { method: 'DELETE' });
       setVendors(prev => prev.filter(x => x.id !== id));
       addToast('danger', 'Vendor Removed', `${v.name} has been deleted.`);
     } catch (err) {
@@ -202,7 +202,7 @@ Dow Chemical`);
 
     for (const v of processed) {
       try {
-        await fetch('http://localhost:4000/vendors', {
+        await fetch('https://vendorapi-production-e486.up.railway.app/vendors', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(v)
@@ -228,7 +228,7 @@ Dow Chemical`);
     
     const updatedVendor = { ...v, complianceStatus: 'Compliant', status: 'Compliant' };
     try {
-      await fetch('http://localhost:4000/vendors', {
+      await fetch('https://vendorapi-production-e486.up.railway.app/vendors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedVendor)
@@ -253,7 +253,7 @@ Dow Chemical`);
   // ── Login / Logout ─────────────────────────────────────────
   const handleLogin = async (userData) => {
     try {
-      await fetch('http://localhost:4000/users', {
+      await fetch('https://vendorapi-production-e486.up.railway.app/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)
